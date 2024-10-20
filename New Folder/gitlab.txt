@@ -1,0 +1,121 @@
+import gitlab
+
+#wget -O flower.png https://img.freepik.com/free-psd/cineraria-flower-png-isolated-transparent-background_191095-10910.jpg
+
+URL='https://gitlab.com'
+GITLAB_TOKEN=''
+gl = gitlab.Gitlab(url=URL, private_token=GITLAB_TOKEN)
+
+#Create a group:
+group = gl.groups.create({
+ 'name': 'group1',
+ 'path': 'group1',
+ 'visibility': 'private'
+})
+
+#Set the avatar image for a group:
+group.avatar = open('flower.png', 'rb')
+group.save()
+
+#List the groups:
+groups = gl.groups.list()
+
+#Get a group’s detail:
+group_id=input('enter group id')
+group = gl.groups.get(group_id)
+
+projects=[
+{
+  'name': 'myrepo', 
+  'namespace_id': 'group.id',
+  'visibility': 'private',
+  'description': 'This is project one.'
+},
+]
+
+project = gl.projects.create(projects)
+
+
+
+try:
+    group = gl.groups.create({'name': 'group1', 'path': 'group1'})
+    print("Group created:", group)
+except gitlab.exceptions.GitlabCreateError as e:
+    print(f"Failed to create group: {e.error_message}")
+    print(f"Response code: {e.response_code}")
+    print(f"Response body: {e.response_body}")
+
+try:
+    groupp = gl.groups.create({'name': 'group1', 'path': 'group1'})
+    print("group has been created...", groupp)
+except gitlab.exceptions.GitlabCreateError as e:
+    print(f"Failed to create group: {e.error_message}")
+    print(f"Response code: {e.response_code}")
+    print(f"Response body: {e.response_body}")
+
+---------------------------------------
+import gitlab
+
+URL='https://gitlab.com'
+GITLAB_TOKEN=''
+try:
+    gl = gitlab.Gitlab(url=URL, private_token=GITLAB_TOKEN)
+    print("connected to gitlab...")
+
+except:
+    print("Not connected...")
+
+existing_groups = gl.groups.list()
+
+projects = existing_groups.projects.list()
+
+
+try:
+    project = gl.projects.create({'name': 'project1','description': 'This is project three.', 'visibility': 'private', 'namespace_id': 95003648})
+    print("project has been created successfully", project)
+except gitlab.exceptions.GitlabCreateError as e:
+    print(f"Failed to create group: {e.error_message}")
+    print(f"Response code: {e.response_code}")
+    print(f"Response body: {e.response_body}")
+
+
+
+
+
+
+
+
+
+
+
+if existing_project.name == project_name:
+                try:
+                    project = gl.projects.create({
+                        'name': project_name,
+                        'description': 'This is project three.',
+                        'visibility': 'private',
+                        'namespace_id': namespace_id
+                    })
+                    print("project has been created successfully", project)
+                except gitlab.exceptions.GitlabCreateError as e:
+                    print(f"Failed to create project: {e.error_message}")
+                    print(f"Response code: {e.response_code}")
+                    print(f"Response body: {e.response_body}")
+
+            else:
+                print(f"{existing_project.name} -- has already been taken")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

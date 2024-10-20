@@ -1,0 +1,102 @@
+https://leetcode.com/problems/final-value-of-variable-after-performing-operations/
+
+a = ["++X","++X","X++"]
+X = 0
+for i in a:
+    if i == "--X" or i == "X--":
+        X=X-1
+    else:
+        X=X+1
+print(X)
+------------
+https://leetcode.com/problems/defanging-an-ip-address/description/
+address = "1.1.1.1"
+x= address.replace(".", "[.]",)
+        return x
+
+or
+
+s = "1.1.1.1"
+y=""
+for i in range(len(s)):
+    if s[i] == ".":
+        y=y+ "[.]"
+    else:
+        y=y+s[i]
+print(y)
+
+output: 1[.]1[.]1[.]1
+---------------------------------------------------
+https://leetcode.com/problems/jewels-and-stones/
+jewels = "aA"
+stones = "aAAbbbb"
+count=0
+for i in jewels:
+    for j in stones:
+        if i == j:
+            count=count+1
+print(count)
+
+# this code is for only unique letters in jewels
+
+if anything is repeated jewels = "aAA"
+jewels = "aAA"
+a= print(''.join(set(jewels)))
+print(a)
+or 
+you can use break
+
+for i in jewels:
+    for j in stones:
+        if i == j:
+            count=count+1
+	    break
+print(count)
+
+or
+for i in jewels:
+    if i in stones:
+        count=count+1
+print(count)
+
+
+---
+Example 1:
+
+Input: jewels = "aA", stones = "aAAbbbb"
+Output: 3
+Example 2:
+
+Input: jewels = "z", stones = "ZZ"
+Output: 0
+---------------------------------------
+https://leetcode.com/problems/maximum-number-of-words-found-in-sentences/
+highest no of words in a sentence
+
+sentences = ["alice and bob love leetcode", "i think so too", "this is great thanks very much"]
+sentences = ["please wait", "continue to fight", "continue to win"]
+
+t=0
+for j in range(len(sentences)):
+    a= sentences[j]
+    ans = 1
+    for i in a:
+        if i == " ":
+            ans = ans +1
+        t = max(ans, t)
+print(t)
+=------------------
+min no fo words
+
+t=10000000000
+for j in range(len(sentences)):
+    a= sentences[j]
+    ans = 1
+    for i in a:
+        if i == " ":
+            ans = ans +1
+    t = min(ans, t)
+print(t)
+
+
+

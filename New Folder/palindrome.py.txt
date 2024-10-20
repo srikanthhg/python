@@ -1,0 +1,22 @@
+a="radar"
+rev=""
+for i in range(len(a)-1, -1, -1):
+    rev=rev+a[i]
+if a != rev:
+    print("not a palindrome")
+else:
+    print("its a palindrome")
+ 
+#2nd method
+n= len(a)//2
+mu = len(a)-1
+for i in range(n):
+    l=a[i]
+    s=a[mu-i]
+    #print(l, s)
+    if l != s:
+        print("no pal")    
+        break
+    else:
+        print("pal")
+        

@@ -1,0 +1,13 @@
+def myfunc():
+    
+    lst=[]
+    
+    n=int(input("enter no of projects: "))
+    for i in range(n):
+        ele=input()
+        lst.append(ele)
+    return lst
+    
+# project_lists=myfunc()
+# print(project_lists)
+print(myfunc())

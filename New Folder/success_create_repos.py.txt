@@ -1,0 +1,183 @@
+/home/ubuntu/test.py:15: UserWarning: Calling a `list()` method without specifying `get_all=True` or `iterator=True` will return a maximum of 20 items. Your query returned 20 of 27 items. See https://python-gitlab.readthedocs.io/en/v4.3.0/api-usage.html#pagination for more details. If this was done intentionally, then this warning can be supressed by adding the argument `get_all=False` to the `list()` call. (python-gitlab: /usr/lib/python3/dist-packages/gitlab/client.py:956)
+  projects = group.projects.list()
+
+
+import gitlab
+URL='https://gitlab.com'
+GITLAB_TOKEN=''
+try:
+    gl = gitlab.Gitlab(url=URL, private_token=GITLAB_TOKEN)
+    print("connected to gitlab...")
+
+except gitlab.exceptions.GitlabConnectionError as e:
+    print(f"Failed to cnnect to gitlab: {e.error_message}")
+    exit(1)
+
+
+group = gl.groups.get(95003648)
+
+projects = group.projects.list(get_all=True)
+
+for project in projects:
+    print(project.name)
+
+==================================================================
+import gitlab
+URL='https://gitlab.com'
+GITLAB_TOKEN=''
+try:
+    gl = gitlab.Gitlab(url=URL, private_token=GITLAB_TOKEN)
+    print("connected to gitlab...")
+
+except gitlab.exceptions.GitlabConnectionError as e:
+    print(f"Failed to cnnect to gitlab: {e.error_message}")
+    exit(1)
+
+
+project_name=input("enter project_name: ")
+
+existing_group=gl.groups.get(95003648)
+existing_projects = existing_group.projects.list(get_all=True)
+
+existing_project_names = {existing_project.name for existing_project in existing_projects}
+   # print("Project Name for this group:",existing_group.name,  "--", existing_project.name, "-" ,existing_project.id)
+
+if  project_name in existing_project_names:
+    print(project_name, "has already been taken")
+
+else:
+    try:
+        print(f"Creating Project.....{project_name}")
+        project = gl.projects.create({
+            'name': project_name,
+            'description': 'This is project three.',
+            'visibility': 'private',
+            'namespace_id': '95003648'
+        })
+        print(f"Project '{project_name}' created successfully.")
+    except gitlab.exceptions.GitlabCreateError as e:
+        print(f"Failed to create project: {e.error_message}")
+        print(f"Response code: {e.response_code}")
+        print(f"Response body: {e.response_body}")
+
+
+
+======================================================================================
+
+import gitlab
+URL='https://gitlab.com'
+GITLAB_TOKEN=''
+try:
+    gl = gitlab.Gitlab(url=URL, private_token=GITLAB_TOKEN)
+    print("connected to gitlab...")
+
+except gitlab.exceptions.GitlabConnectionError as e:
+    print(f"Failed to cnnect to gitlab: {e.error_message}")
+    exit(1)
+
+project_name=input("Enter the new project name: ")
+namespace_id=input(f"Enter the existing namespace id where you want to create the new project {project_name}: ")
+namespace_id=int(namespace_id)
+
+existing_groups = gl.groups.list(get_all=True)
+
+for existing_group in existing_groups:
+    print("Group Name:",existing_group.name, "-", existing_group.id)
+    if existing_group.id == namespace_id:
+        existing_projects = existing_group.projects.list(get_all=True)
+
+        existing_project_names = {existing_project.name  for existing_project in existing_projects}
+  #      print(existing_project_names)
+
+        if  project_name in existing_project_names:
+            print(project_name, "has already been taken")
+
+        else:
+            try:
+                project = gl.projects.create({
+                    'name': project_name,
+                    'description': 'This is project three.',
+                    'visibility': 'private',
+                    'namespace_id': namespace_id
+                })
+                print(f"Project '{project_name}' created successfully.")
+            except gitlab.exceptions.GitlabCreateError as e:
+                print(f"Failed to create project: {e.error_message}")
+                print(f"Response code: {e.response_code}")
+                print(f"Response body: {e.response_body}")
+
+
+
+===================================================================
+import gitlab
+
+URL='https://gitlab.com'
+GITLAB_TOKEN=''
+
+try:
+    gl = gitlab.Gitlab(url=URL, private_token=GITLAB_TOKEN)
+    print("connected to gitlab...")
+
+except gitlab.exceptions.GitlabConnectionError as e:
+    print(f"Failed to cnnect to gitlab: {e.error_message}")
+    exit(1)
+
+project_names=[]
+n=int(input("Enter no of projects you want ot create: "))
+for i in range(n):
+    ele=input("Enter the name of the project and press enter: ")
+    project_names.append(ele)
+
+print()
+print("Below are the existing group names & group ids:")
+print("-----------------------------------------------")
+
+existing_groups = gl.groups.list(get_all=True)
+
+for existing_group in existing_groups:
+    print("Group Name:",existing_group.name, "-", existing_group.id)
+
+namespace_id=input(f"Enter the existing namespace id where you want to create the new project {project_names}: ")
+namespace_id=int(namespace_id)
+print()
+
+for existing_group in existing_groups:
+    if existing_group.id == namespace_id:
+        existing_projects = existing_group.projects.list(get_all=True)
+        existing_project_names={existing_project.name for existing_project in existing_projects}
+        for p_names in range(len(project_names)):
+
+            if project_names[p_names] in existing_project_names:
+                print(project_names[p_names], "has already been taken")
+
+            else:
+                try:
+                    print(f"Creating Project.....{project_names[p_names]}")
+                    project = gl.projects.create({
+                        'name': project_names[p_names],
+                        'description': 'This is project three.',
+                        'visibility': 'private',
+                        'namespace_id': namespace_id
+                    })
+                    print(f"Project '{project_names[p_names]}' created successfully in {existing_group.name}")
+                except gitlab.exceptions.GitlabCreateError as e:
+                    print(f"Failed to create project: {e.error_message}")
+                    print(f"Response code: {e.response_code}")
+                    print(f"Response body: {e.response_body}")
+
+
+
+print("If you want to delete repositories press 1 or press 0")
+if bool(input()):
+    a= input("enter project id")
+    gl.projects.delete(a)
+    print(f"{a} project deleted successfully")
+
+
+--------------------------------------------------------------------------------------------
+gl.projects.delete(project_id)
+# or
+project.delete()
+
+
+

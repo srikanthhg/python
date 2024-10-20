@@ -1,0 +1,46 @@
+a="sri"
+b=3
+for i in range(b):
+    print(a)
+print()    # for space
+#2nd method
+
+def myfunc(n, a):
+    for i in range(n):
+        print(a)
+       
+myfunc(3, "kanth")
+print()  
+myfunc(4, "kanth1")
+print()  
+myfunc(3, "kanth2")
+myfunc(3, "kanth3")
+
+--------------------
+def myfunc():
+    print("srikanth")
+    return "kanth"
+
+s = myfunc()
+print(s)
+
+--------------------
+# tables
+a means which table
+b means print tables up to b
+
+def myfunc(a, b):
+    for i in range(b+1):
+        if i != 0:
+            #print(a, "*", i, "=", a*i)
+            #print(str(a), "*", str(i), "=", str(a*i))
+            print(f"{a} * {i} = {a*i}")
+myfunc(5, 10)
+--------
+def myfunc(a, b):
+    for i in range(b+1):
+        if i != 0:
+            print(a,"*",i,"=",a*i)
+myfunc(5, 10)
+print()
+myfunc(2, 5)
